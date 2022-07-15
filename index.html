@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Pizza</title>
+<link rel="stylesheet" href="main.css" type="text/css"/>
+<link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous">
+</script>
+</head>
+<body>
+  <div id="header">Order One Delicious Pizza</div>
+  <div class="layout">
+   <div class="col1">
+
+   </div>
+   <div class="col2">
+
+   </div>
+   <div class="col3">
+
+   </div>
+  </div>
+
+  <table width="100%">
+    <tr>
+     <td class="col1">
+      <h5>Choose Pizza Type</h5>
+      <select id="type">
+          <option value="Pepperoni" selected>Pepperoni</option>
+          <option value="Country">Country</option>
+          <option value="Hawaiian">Hawaiian</option>
+          <option value="Mushroom">Mushroom</option>
+      </select>
+     </td>
+     <td class="col2">
+      <select id="size">
+          <option value="21" selected>21</option>
+          <option value="26">26</option>
+          <option value="31">31</option>
+          <option value="45">45</option>
+      </select>
+      <h5>Choose Pizza Size (i.e. Radius)</h5>
+     </td>
+     <td class="col3">
+      <h5>Choose Sauce</h5>
+      <select id="sauce">
+          <option value="cheesy" selected>Сheesy</option>
+          <option value="sweet_and_sour">Sweet and Sour</option>
+          <option value="garlic">Garlic</option>
+          <option value="barbecue">Barbecue</option>
+      </select>
+     </td>
+    </tr>
+   </table>
+   
+<br><br><button>Order</button>
+<br><hr><div id="bill"></div>
+
+<script>
+var btn = document.querySelector('button');
+btn.addEventListener('click',function() {
+	btn.disabled = true;
+	setTimeout(function() {
+		btn.disabled = false;
+	}, 1000); // in ms time to unlock the button
+});
+</script>
+<script>
+  $(document).ready(function(){
+      $('button').on('click', function() {
+        var typeValue = $('#type').val();
+        var sizeValue = $('#size').val();
+        var sauceValue = $('#sauce').val();
+        $.ajax({
+            method: "POST",
+            url: "calculating.php",
+            data: { type: typeValue, size: sizeValue, sauce: sauceValue }
+        })
+        .done(function( msg ) {
+            $('#bill').html( msg );
+            //alert( msg ); // just for testing
+        });
+      })
+  });
+</script>
+</body>
